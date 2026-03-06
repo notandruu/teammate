@@ -17,23 +17,6 @@ export function getMemberWeight(chatId: string, sender: string): number {
   return member ? member.balance_usdc / total : 0
 }
 
-export function checkVoteResult(proposal: Proposal): VoteResult {
-  const votes = getVotes(proposal.id)
-  let weightYes = 0
-  let weightNo = 0
-
-  for (const v of votes) {
-    if (v.vote === 'yes') weightYes += v.weight
-    else weightNo += v.weight
-  }
-
-  updateProposalWeights(proposal.id, weightYes, weightNo)
-
-  if (weightYes >= config.supermajorityThreshold) return 'passed'
-  if (weightNo > 1 - config.supermajorityThreshold) return 'failed'
-  return 'pending'
-}
-
 export function tallyVotes(proposal: Proposal): { weightYes: number; weightNo: number; result: VoteResult } {
   const votes = getVotes(proposal.id)
   let weightYes = 0
