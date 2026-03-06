@@ -1,8 +1,12 @@
 # sideline
 
-**add sideline to your group chat, pool money with friends, and bet on sports together through polymarket, all over iMessage.**
+> add sideline to your group chat, pool money with friends, and bet on sports together through polymarket, all over iMessage.
 
-no app. no UI. just text.
+**personal utility** — your friends are already texting about the game. now the bet happens in the same thread.
+
+**conversation-native** — no app, no link, no UI. sideline lives inside the group chat. every interaction is a text message.
+
+**one sentence** — pool money with your group chat and bet on sports through polymarket, without ever leaving iMessage.
 
 ---
 
