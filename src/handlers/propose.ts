@@ -1,6 +1,7 @@
 import { searchSportsMarkets, MarketData } from '../polymarket/gamma'
 import { getMember, getTotalPool } from '../db/members'
-import { createProposal, getActiveProposals } from '../db/bets'
+import { createProposal, getActiveProposals, addVote, updateProposalWeights } from '../db/bets'
+import { getMemberWeight } from '../engine/voting'
 import { config } from '../config'
 import { formatUsd, formatCents, formatPayout } from '../utils/format'
 
@@ -57,6 +58,10 @@ export async function handlePropose(
     expires_at: now + config.proposalExpiryMs
   })
 
+  const proposerWeight = getMemberWeight(chatId, proposer)
+  addVote(proposal.id, proposer, 'yes', proposerWeight)
+  updateProposalWeights(proposal.id, proposerWeight, 0)
+
   const name = displayName ?? proposer
   const payout = formatPayout(amount, price)
 
@@ -64,6 +69,7 @@ export async function handlePropose(
 ${name} wants to bet ${formatUsd(amount)} on "${bestMarket.question}" (${side.toUpperCase()} at ${formatCents(price)})
 if right, payout: ${payout}
 
+${name} voted yes automatically.
 vote "yes" to approve, "no" to reject
 need 2/3 majority. expires in 1h.`
 }
