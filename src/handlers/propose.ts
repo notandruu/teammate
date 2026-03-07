@@ -20,6 +20,9 @@ export async function handlePropose(
   const total = getTotalPool(chatId)
   if (amount > total) return `pool only has ${formatUsd(total)}. lower the amount.`
 
+  const existing = getActiveProposals(chatId)
+  if (existing.length > 0) return `there's already an active proposal (#${existing[0].id}). vote on it first.`
+
   let events
   try {
     events = await searchSportsMarkets(query)
