@@ -57,10 +57,3 @@ export async function placeBet(
   return orderId
 }
 
-export async function getOpenOrders(client: ClobClient): Promise<unknown[]> {
-  try {
-    return await (client as unknown as { getOpenOrders: () => Promise<unknown[]> }).getOpenOrders()
-  } catch {
-    return []
-  }
-}
