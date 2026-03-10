@@ -1,5 +1,5 @@
 import { getActiveProposals, getVote, addVote, getProposal, updateProposalStatus, createPosition } from '../db/bets'
-import { updateBalance } from '../db/members'
+import { updateBalance, getMembers } from '../db/members'
 import { getMemberWeight, tallyVotes } from '../engine/voting'
 import { getOrCreateGroup } from '../db/groups'
 import { getWalletForGroup, getGroupWallet } from '../polymarket/wallet'
@@ -65,7 +65,15 @@ async function executeProposal(chatId: string, proposalId: number): Promise<stri
     const orderId = await placeBet(client, proposal.token_id, proposal.price, proposal.amount_usdc)
 
     updateProposalStatus(proposal.id, 'executed', orderId)
-    updateBalance(chatId, proposal.proposer, -proposal.amount_usdc)
+
+    const members = getMembers(chatId)
+    const total = members.reduce((s, m) => s + m.balance_usdc, 0)
+    if (total > 0) {
+      for (const m of members) {
+        const share = (m.balance_usdc / total) * proposal.amount_usdc
+        updateBalance(chatId, m.sender, -share)
+      }
+    }
 
     createPosition({
       chat_id: chatId,
