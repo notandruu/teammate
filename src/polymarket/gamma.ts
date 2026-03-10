@@ -79,7 +79,7 @@ export async function searchSportsMarkets(query?: string): Promise<SportEvent[]>
       title: event.title,
       markets: event.markets
         .map(parseGammaMarket)
-        .filter((m): m is MarketData => m !== null && m.active)
+        .filter((m): m is MarketData => m !== null && m.active && m.volume > 100)
     }))
     .filter(e => e.markets.length > 0)
 }
