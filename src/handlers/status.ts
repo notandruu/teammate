@@ -33,7 +33,7 @@ export async function handleStatus(
 
   if (query === 'proposals') {
     const proposals = getActiveProposals(chatId)
-    if (proposals.length === 0) return 'no active proposals.'
+    if (proposals.length === 0) return 'no active proposals. propose a bet with "bet $X on [team]"'
 
     const lines: string[] = ['active proposals:\n']
     for (const p of proposals) {
