@@ -6,6 +6,7 @@ import { getWalletForGroup, getGroupWallet } from '../polymarket/wallet'
 import { initClobClient, placeBet } from '../polymarket/clob'
 import { formatPercent, formatUsd, formatCents } from '../utils/format'
 import { logger } from '../utils/logger'
+import { config } from '../config'
 
 export async function handleVote(
   chatId: string,
@@ -45,7 +46,7 @@ export async function handleVote(
     return `${name} voted no (${formatPercent(weight)} weight). proposal #${proposal.id} failed.`
   }
 
-  const needed = Math.max(0, 2 / 3 - weightYes)
+  const needed = Math.max(0, config.supermajorityThreshold - weightYes)
   if (vote === 'yes') {
     return `${name} voted yes (${formatPercent(weight)} weight). need ${formatPercent(needed)} more.`
   } else {
