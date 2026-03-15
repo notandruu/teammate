@@ -98,6 +98,7 @@ potential payout: ${formatUsd(payout)} (${formatCents(proposal.price)} implied o
   } catch (err) {
     logger.error('execution failed', err)
     updateProposalStatus(proposal.id, 'passed')
-    return `bet passed but execution failed. check logs. (order not placed)`
+    const errMsg = err instanceof Error ? err.message : 'unknown error'
+    return `bet passed but execution failed: ${errMsg.slice(0, 80)}`
   }
 }
