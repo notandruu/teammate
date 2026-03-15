@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>sideline — group chat sports betting</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+      background: #f5f5f7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 20px 60px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    .slide-header {
+      text-align: center;
+      margin-bottom: 32px;
+      min-height: 56px;
+    }
+
+    .slide-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: #1d1d1f;
+      letter-spacing: -0.5px;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .slide-title.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .slide-subtitle {
+      font-size: 13px;
+      color: #86868b;
+      margin-top: 5px;
+      opacity: 0;
+      transition: opacity 0.4s ease 0.1s;
+    }
+
+    .slide-subtitle.visible {
+      opacity: 1;
+    }
+
+    /* Phone shell */
+    .phone {
+      width: 375px;
+      max-width: 100%;
+      background: white;
+      border-radius: 50px;
+      box-shadow:
+        0 0 0 1px rgba(0,0,0,0.07),
+        0 24px 64px rgba(0,0,0,0.13),
+        0 8px 20px rgba(0,0,0,0.08);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Status bar */
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 24px 0;
+      background: white;
+    }
+
+    .status-time {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1d1d1f;
+    }
+
+    .status-icons {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .signal-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 12px;
+    }
+
+    .bar {
+      width: 3px;
+      background: #1d1d1f;
+      border-radius: 1px;
+    }
+
+    .bar:nth-child(1) { height: 4px; }
+    .bar:nth-child(2) { height: 6px; }
+    .bar:nth-child(3) { height: 9px; }
+    .bar:nth-child(4) { height: 12px; }
+
+    .battery {
+      width: 24px;
+      height: 12px;
+      border: 1.5px solid #1d1d1f;
+      border-radius: 3px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: 2px;
+    }
+
+    .battery::after {
+      content: '';
+      position: absolute;
+      right: -5px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 2.5px;
+      height: 5px;
+      background: #1d1d1f;
+      border-radius: 0 1px 1px 0;
+    }
+
+    .battery-fill {
+      width: 75%;
+      height: 100%;
+      background: #34c759;
+      border-radius: 1px;
+    }
+
+    /* Chat header */
+    .chat-header {
+      padding: 8px 20px 12px;
+      text-align: center;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      background: white;
+    }
+
+    .chat-avatar {
+      font-size: 28px;
+      margin-bottom: 2px;
+    }
+
+    .chat-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1d1d1f;
+    }
+
+    .chat-members {
+      font-size: 12px;
+      color: #007AFF;
+      margin-top: 2px;
+    }
+
+    /* Messages */
+    .messages {
+      padding: 16px 12px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      min-height: 520px;
+      overflow: hidden;
+    }
+
+    .ts {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 500;
+      color: #86868b;
+      margin: 10px 0 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .row {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.28s ease, transform 0.28s cubic-bezier(0.34, 1.36, 0.64, 1);
+    }
+
+    .row.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .row.me {
+      flex-direction: row-reverse;
+      margin-left: 60px;
+    }
+
+    .row.them {
+      margin-right: 60px;
+    }
+
+    .bubble {
+      padding: 9px 13px;
+      border-radius: 18px;
+      font-size: 15px;
+      line-height: 1.45;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-width: 100%;
+    }
+
+    .them .bubble {
+      background: #E5E5EA;
+      color: #1d1d1f;
+      border-bottom-left-radius: 5px;
+    }
+
+    .me .bubble {
+      background: #007AFF;
+      color: white;
+      border-bottom-right-radius: 5px;
+    }
+
+    /* consecutive same-sender: no tail */
+    .row.them.cont .bubble { border-bottom-left-radius: 18px; }
+    .row.me.cont .bubble { border-bottom-right-radius: 18px; }
+
+    /* Meme image */
+    .meme {
+      border-radius: 18px;
+      border-bottom-left-radius: 5px;
+      overflow: hidden;
+      max-width: 200px;
+      background: #E5E5EA;
+    }
+
+    .meme img {
+      width: 100%;
+      display: block;
+      border-radius: 18px;
+      border-bottom-left-radius: 5px;
+    }
+
+    .meme-placeholder {
+      width: 180px;
+      height: 150px;
+      background: #E5E5EA;
+      border-radius: 18px;
+      border-bottom-left-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      color: #86868b;
+      font-size: 13px;
+    }
+
+    .meme-placeholder .icon { font-size: 28px; }
+
+    /* Typing indicator */
+    .typing-row {
+      display: flex;
+      align-items: flex-end;
+      margin-right: 60px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .typing-row.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .typing-bubble {
+      background: #E5E5EA;
+      border-radius: 18px;
+      border-bottom-left-radius: 5px;
+      padding: 12px 16px;
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      background: #8e8e93;
+      border-radius: 50%;
+      animation: ripple 1.3s infinite ease-in-out;
+    }
+
+    .dot:nth-child(1) { animation-delay: 0s; }
+    .dot:nth-child(2) { animation-delay: 0.18s; }
+    .dot:nth-child(3) { animation-delay: 0.36s; }
+
+    @keyframes ripple {
+      0%, 60%, 100% {
+        transform: scale(1);
+        opacity: 0.4;
+      }
+      30% {
+        transform: scale(1.35);
+        opacity: 1;
+      }
+    }
+
+    /* input bar */
+    .input-bar {
+      border-top: 1px solid rgba(0,0,0,0.08);
+      padding: 10px 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: white;
+    }
+
+    .input-field {
+      flex: 1;
+      background: #f2f2f7;
+      border-radius: 20px;
+      padding: 8px 14px;
+      font-size: 15px;
+      color: #86868b;
+      border: none;
+      outline: none;
+    }
+
+    .send-btn {
+      width: 32px;
+      height: 32px;
+      background: #007AFF;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .send-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: white;
+    }
+
+    /* tap hint */
+    .tap-hint {
+      margin-top: 24px;
+      font-size: 13px;
+      color: #86868b;
+      opacity: 0;
+      animation: fadeHint 1s ease 2s forwards;
+    }
+
+    @keyframes fadeHint {
+      to { opacity: 1; }
+    }
+
+    /* done state */
+    .done-badge {
+      margin-top: 28px;
+      background: #007AFF;
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 24px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .done-badge.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="slide-header">
+    <div class="slide-title" id="slideTitle">Wins you money</div>
+    <div class="slide-subtitle" id="slideSubtitle">tap anywhere to skip</div>
+  </div>
+
+  <div class="phone">
+    <!-- status bar -->
+    <div class="status-bar">
+      <div class="status-time">9:41</div>
+      <div class="status-icons">
+        <div class="signal-bars">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="#1d1d1f">
+          <path d="M8 2.4C5.6 2.4 3.4 3.4 1.8 5L0 3.2C2.2 1.2 5 0 8 0s5.8 1.2 8 3.2L14.2 5C12.6 3.4 10.4 2.4 8 2.4z"/>
+          <path d="M8 6c-1.4 0-2.6.6-3.6 1.4L2.6 5.6C4 4.4 5.9 3.6 8 3.6s4 .8 5.4 2L11.6 7.4C10.6 6.6 9.4 6 8 6z"/>
+          <circle cx="8" cy="11" r="1.8"/>
+        </svg>
+        <div class="battery">
+          <div class="battery-fill"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- chat header -->
+    <div class="chat-header">
+      <div class="chat-avatar">🏀</div>
+      <div class="chat-name">squad bets</div>
+      <div class="chat-members">jake, mike, sideline &amp; you</div>
+    </div>
+
+    <!-- messages -->
+    <div class="messages" id="messages">
+      <div class="ts">Today 9:41 PM</div>
+    </div>
+
+    <!-- typing indicator (hidden by default) -->
+    <div class="typing-row" id="typing" style="padding: 0 12px 8px;">
+      <div class="typing-bubble">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+
+    <!-- input bar -->
+    <div class="input-bar">
+      <div class="input-field">iMessage</div>
+      <div class="send-btn">
+        <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="tap-hint" id="tapHint">tap to advance</div>
+  <div class="done-badge" id="doneBadge">github.com/notandruu/sideline</div>
+
+<script>
+  // ─── conversation script ───────────────────────────────────────────────
+  // type: 'me' | 'them' | 'meme' | 'ts'
+  // typing: ms to show typing indicator before this message appears
+  const script = [
+    { type: 'me',   text: 'yo the warriors play tonight right' },
+    { type: 'them', text: 'yep. warriors vs kings\nYES at 61c on polymarket rn 👀', typing: 1600 },
+    { type: 'them', text: 'pool has $340 in it', typing: 0 },
+    { type: 'me',   text: 'bet $100 on warriors winning' },
+    { type: 'them', text: 'BET PROPOSAL #1\n$100 on Warriors (YES @ 61c)\npotential payout: $164 💰', typing: 2000 },
+    { type: 'them', text: 'you voted yes automatically (you proposed it lol)\nwaiting on jake and mike...', typing: 0 },
+    { type: 'me',   text: 'JAKE GET ON' },
+    { type: 'me',   text: 'vote yes rn' },
+    { type: 'them', text: 'jake voted yes (38% weight)\nmike voted yes (29% weight)\n\nBET PLACED 🎰', typing: 1100 },
+    { type: 'meme', label: 'attach your hype meme here', icon: '🔥' },
+    { type: 'ts',   text: '11:48 PM' },
+    { type: 'them', text: '🏆 WARRIORS WIN\n\npool cashed $164 on the polymarket bet\npool is now $404 📈', typing: 800 },
+    { type: 'me',   text: 'LETSSSS GOOOO' },
+    { type: 'them', text: 'celtics game tomorrow at 7\nwant me to find a market?', typing: 1800 },
+    { type: 'me',   text: 'yes 😈' },
+    { type: 'meme', label: 'attach your reaction meme here', icon: '😂' },
+  ]
+
+  const titles = [
+    { at: 0,  title: 'No app.',          sub: 'tap anywhere to advance' },
+    { at: 4,  title: 'No UI.',           sub: 'tap anywhere to advance' },
+    { at: 9,  title: 'Just text.',       sub: 'tap anywhere to advance' },
+    { at: 11, title: 'Wins you money.',  sub: 'tap anywhere to advance' },
+    { at: 15, title: 'sideline',         sub: 'github.com/notandruu/sideline' },
+  ]
+
+  // ─── state ─────────────────────────────────────────────────────────────
+  let idx = 0
+  let busy = false
+  let typingTimer = null
+  let autoTimer = null
+
+  const messagesEl = document.getElementById('messages')
+  const typingEl   = document.getElementById('typing')
+  const titleEl    = document.getElementById('slideTitle')
+  const subtitleEl = document.getElementById('slideSubtitle')
+  const doneBadge  = document.getElementById('doneBadge')
+  const tapHint    = document.getElementById('tapHint')
+
+  // show title on load
+  setTimeout(() => {
+    titleEl.classList.add('visible')
+    subtitleEl.classList.add('visible')
+    updateTitle(0)
+  }, 300)
+
+  function updateTitle(scriptIdx) {
+    let active = titles[0]
+    for (const t of titles) {
+      if (scriptIdx >= t.at) active = t
+    }
+    if (titleEl.textContent !== active.title) {
+      titleEl.style.opacity = 0
+      titleEl.style.transform = 'translateY(6px)'
+      setTimeout(() => {
+        titleEl.textContent = active.title
+        subtitleEl.textContent = active.sub
+        titleEl.style.opacity = 1
+        titleEl.style.transform = 'translateY(0)'
+      }, 200)
+    }
+  }
+
+  function showTyping() {
+    typingEl.classList.add('show')
+  }
+
+  function hideTyping() {
+    typingEl.classList.remove('show')
+  }
+
+  function appendMessage(item, prevType) {
+    const cont = prevType === item.type
+
+    if (item.type === 'ts') {
+      const el = document.createElement('div')
+      el.className = 'ts'
+      el.textContent = item.text
+      messagesEl.appendChild(el)
+      return
+    }
+
+    if (item.type === 'meme') {
+      const row = document.createElement('div')
+      row.className = 'row them'
+      const meme = document.createElement('div')
+      meme.className = 'meme-placeholder'
+      meme.innerHTML = `<span class="icon">${item.icon}</span><span>${item.label}</span>`
+      row.appendChild(meme)
+      messagesEl.appendChild(row)
+      requestAnimationFrame(() => row.classList.add('show'))
+      return
+    }
+
+    const row = document.createElement('div')
+    row.className = `row ${item.type}${cont ? ' cont' : ''}`
+
+    const bubble = document.createElement('div')
+    bubble.className = 'bubble'
+    bubble.textContent = item.text
+    row.appendChild(bubble)
+
+    messagesEl.appendChild(row)
+    requestAnimationFrame(() => row.classList.add('show'))
+
+    // scroll to bottom
+    messagesEl.scrollTop = messagesEl.scrollHeight
+  }
+
+  function step() {
+    if (idx >= script.length) {
+      doneBadge.classList.add('show')
+      tapHint.style.display = 'none'
+      return
+    }
+
+    busy = true
+    clearTimeout(autoTimer)
+    clearTimeout(typingTimer)
+
+    const item = script[idx]
+    const prevType = idx > 0 ? script[idx - 1].type : null
+
+    updateTitle(idx)
+
+    const typingMs = item.typing != null ? item.typing : (item.type === 'them' ? 1200 : 0)
+
+    if (typingMs > 0 && item.type === 'them') {
+      showTyping()
+      typingTimer = setTimeout(() => {
+        hideTyping()
+        setTimeout(() => {
+          appendMessage(item, prevType)
+          idx++
+          busy = false
+          autoTimer = setTimeout(step, 900)
+        }, 120)
+      }, typingMs)
+    } else {
+      if (item.type !== 'them') hideTyping()
+      appendMessage(item, prevType)
+      idx++
+      busy = false
+      autoTimer = setTimeout(step, item.type === 'me' ? 700 : 800)
+    }
+  }
+
+  function advance() {
+    if (idx >= script.length) return
+
+    // skip current animation, show message immediately
+    clearTimeout(typingTimer)
+    clearTimeout(autoTimer)
+    hideTyping()
+
+    if (busy) {
+      const item = script[idx - 1] ?? script[idx]
+      // message already being shown, just advance timer
+      autoTimer = setTimeout(step, 100)
+      busy = false
+      return
+    }
+
+    step()
+  }
+
+  document.body.addEventListener('click', advance)
+
+  // kick off
+  setTimeout(step, 1200)
+</script>
+
+</body>
+</html>
