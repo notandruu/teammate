@@ -25,6 +25,12 @@ built on [photon's imessage-kit](https://github.com/photon-ai/imessage-kit). the
 
 ---
 
+## demo
+
+don't want to add API keys? open [`demo.html`](./demo.html) directly in your browser — no server, no setup. shows a full bet from proposal to payout with the real iMessage UI and typing animations.
+
+---
+
 ## commands
 
 there are no hardcoded commands. every message is parsed by claude haiku, so you can say things however you'd naturally text them.
