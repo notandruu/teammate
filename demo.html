@@ -22,7 +22,7 @@
 
     .slide-header {
       text-align: center;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
       min-height: 56px;
     }
 
@@ -36,10 +36,7 @@
       transition: opacity 0.4s ease, transform 0.4s ease;
     }
 
-    .slide-title.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .slide-title.visible { opacity: 1; transform: translateY(0); }
 
     .slide-subtitle {
       font-size: 13px;
@@ -49,27 +46,27 @@
       transition: opacity 0.4s ease 0.1s;
     }
 
-    .slide-subtitle.visible {
-      opacity: 1;
-    }
+    .slide-subtitle.visible { opacity: 1; }
 
-    /* Phone shell */
+    /* ── Phone shell ── */
     .phone {
       width: 375px;
       max-width: 100%;
+      height: 700px;
       background: white;
       border-radius: 50px;
       box-shadow:
         0 0 0 1px rgba(0,0,0,0.07),
         0 24px 64px rgba(0,0,0,0.13),
         0 8px 20px rgba(0,0,0,0.08);
-      overflow: hidden;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
 
     /* Status bar */
     .status-bar {
+      flex-shrink: 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -77,100 +74,57 @@
       background: white;
     }
 
-    .status-time {
-      font-size: 15px;
-      font-weight: 600;
-      color: #1d1d1f;
-    }
+    .status-time { font-size: 15px; font-weight: 600; color: #1d1d1f; }
 
-    .status-icons {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+    .status-icons { display: flex; align-items: center; gap: 6px; }
 
-    .signal-bars {
-      display: flex;
-      align-items: flex-end;
-      gap: 2px;
-      height: 12px;
-    }
-
-    .bar {
-      width: 3px;
-      background: #1d1d1f;
-      border-radius: 1px;
-    }
-
+    .signal-bars { display: flex; align-items: flex-end; gap: 2px; height: 12px; }
+    .bar { width: 3px; background: #1d1d1f; border-radius: 1px; }
     .bar:nth-child(1) { height: 4px; }
     .bar:nth-child(2) { height: 6px; }
     .bar:nth-child(3) { height: 9px; }
     .bar:nth-child(4) { height: 12px; }
 
     .battery {
-      width: 24px;
-      height: 12px;
+      width: 24px; height: 12px;
       border: 1.5px solid #1d1d1f;
       border-radius: 3px;
       position: relative;
-      display: flex;
-      align-items: center;
-      padding: 2px;
+      display: flex; align-items: center; padding: 2px;
     }
-
     .battery::after {
-      content: '';
-      position: absolute;
-      right: -5px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 2.5px;
-      height: 5px;
-      background: #1d1d1f;
-      border-radius: 0 1px 1px 0;
+      content: ''; position: absolute; right: -5px; top: 50%;
+      transform: translateY(-50%); width: 2.5px; height: 5px;
+      background: #1d1d1f; border-radius: 0 1px 1px 0;
     }
-
-    .battery-fill {
-      width: 75%;
-      height: 100%;
-      background: #34c759;
-      border-radius: 1px;
-    }
+    .battery-fill { width: 75%; height: 100%; background: #34c759; border-radius: 1px; }
 
     /* Chat header */
     .chat-header {
+      flex-shrink: 0;
       padding: 8px 20px 12px;
       text-align: center;
       border-bottom: 1px solid rgba(0,0,0,0.06);
       background: white;
     }
+    .chat-avatar { font-size: 28px; margin-bottom: 2px; }
+    .chat-name { font-size: 16px; font-weight: 600; color: #1d1d1f; }
+    .chat-members { font-size: 12px; color: #007AFF; margin-top: 2px; }
 
-    .chat-avatar {
-      font-size: 28px;
-      margin-bottom: 2px;
-    }
-
-    .chat-name {
-      font-size: 16px;
-      font-weight: 600;
-      color: #1d1d1f;
-    }
-
-    .chat-members {
-      font-size: 12px;
-      color: #007AFF;
-      margin-top: 2px;
-    }
-
-    /* Messages */
+    /* ── Messages — fixed height, scrollable ── */
     .messages {
-      padding: 16px 12px 20px;
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 12px 8px;
       display: flex;
       flex-direction: column;
       gap: 3px;
-      min-height: 520px;
-      overflow: hidden;
+      scroll-behavior: smooth;
     }
+
+    /* hide scrollbar visually */
+    .messages::-webkit-scrollbar { display: none; }
+    .messages { -ms-overflow-style: none; scrollbar-width: none; }
 
     .ts {
       text-align: center;
@@ -190,20 +144,9 @@
       transform: translateY(10px);
       transition: opacity 0.28s ease, transform 0.28s cubic-bezier(0.34, 1.36, 0.64, 1);
     }
-
-    .row.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .row.me {
-      flex-direction: row-reverse;
-      margin-left: 60px;
-    }
-
-    .row.them {
-      margin-right: 60px;
-    }
+    .row.show { opacity: 1; transform: translateY(0); }
+    .row.me { flex-direction: row-reverse; margin-left: 60px; }
+    .row.them { margin-right: 60px; }
 
     .bubble {
       padding: 9px 13px;
@@ -214,57 +157,16 @@
       word-break: break-word;
       max-width: 100%;
     }
-
-    .them .bubble {
-      background: #E5E5EA;
-      color: #1d1d1f;
-      border-bottom-left-radius: 5px;
-    }
-
-    .me .bubble {
-      background: #007AFF;
-      color: white;
-      border-bottom-right-radius: 5px;
-    }
-
-    /* consecutive same-sender: no tail */
+    .them .bubble { background: #E5E5EA; color: #1d1d1f; border-bottom-left-radius: 5px; }
+    .me .bubble   { background: #007AFF; color: white;   border-bottom-right-radius: 5px; }
     .row.them.cont .bubble { border-bottom-left-radius: 18px; }
-    .row.me.cont .bubble { border-bottom-right-radius: 18px; }
+    .row.me.cont .bubble   { border-bottom-right-radius: 18px; }
 
-    /* Meme image */
-    .meme {
-      border-radius: 18px;
-      border-bottom-left-radius: 5px;
-      overflow: hidden;
-      max-width: 200px;
-      background: #E5E5EA;
-    }
+    /* Meme */
+    .meme { border-radius: 18px; border-bottom-left-radius: 5px; overflow: hidden; max-width: 200px; }
+    .meme img { width: 100%; display: block; }
 
-    .meme img {
-      width: 100%;
-      display: block;
-      border-radius: 18px;
-      border-bottom-left-radius: 5px;
-    }
-
-    .meme-placeholder {
-      width: 180px;
-      height: 150px;
-      background: #E5E5EA;
-      border-radius: 18px;
-      border-bottom-left-radius: 5px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      color: #86868b;
-      font-size: 13px;
-    }
-
-    .meme-placeholder .icon { font-size: 28px; }
-
-    /* Typing indicator */
+    /* Typing indicator — lives inside .messages */
     .typing-row {
       display: flex;
       align-items: flex-end;
@@ -273,167 +175,101 @@
       transform: translateY(8px);
       transition: opacity 0.2s ease, transform 0.2s ease;
     }
-
-    .typing-row.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .typing-row.show { opacity: 1; transform: translateY(0); }
 
     .typing-bubble {
       background: #E5E5EA;
       border-radius: 18px;
       border-bottom-left-radius: 5px;
       padding: 12px 16px;
-      display: flex;
-      gap: 5px;
-      align-items: center;
+      display: flex; gap: 5px; align-items: center;
     }
 
     .dot {
-      width: 8px;
-      height: 8px;
+      width: 8px; height: 8px;
       background: #8e8e93;
       border-radius: 50%;
       animation: ripple 1.3s infinite ease-in-out;
     }
-
     .dot:nth-child(1) { animation-delay: 0s; }
     .dot:nth-child(2) { animation-delay: 0.18s; }
     .dot:nth-child(3) { animation-delay: 0.36s; }
 
     @keyframes ripple {
-      0%, 60%, 100% {
-        transform: scale(1);
-        opacity: 0.4;
-      }
-      30% {
-        transform: scale(1.35);
-        opacity: 1;
-      }
+      0%, 60%, 100% { transform: scale(1); opacity: 0.4; }
+      30%           { transform: scale(1.35); opacity: 1; }
     }
 
-    /* input bar */
+    /* Input bar */
     .input-bar {
+      flex-shrink: 0;
       border-top: 1px solid rgba(0,0,0,0.08);
       padding: 10px 14px 24px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      display: flex; align-items: center; gap: 10px;
       background: white;
     }
-
     .input-field {
-      flex: 1;
-      background: #f2f2f7;
-      border-radius: 20px;
-      padding: 8px 14px;
-      font-size: 15px;
-      color: #86868b;
-      border: none;
-      outline: none;
+      flex: 1; background: #f2f2f7; border-radius: 20px;
+      padding: 8px 14px; font-size: 15px; color: #86868b;
+      border: none; outline: none;
     }
-
     .send-btn {
-      width: 32px;
-      height: 32px;
-      background: #007AFF;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+      width: 32px; height: 32px; background: #007AFF;
+      border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; flex-shrink: 0;
     }
+    .send-btn svg { width: 16px; height: 16px; fill: white; }
 
-    .send-btn svg {
-      width: 16px;
-      height: 16px;
-      fill: white;
-    }
-
-    /* tap hint */
+    /* Tap hint */
     .tap-hint {
-      margin-top: 24px;
-      font-size: 13px;
-      color: #86868b;
-      opacity: 0;
-      animation: fadeHint 1s ease 2s forwards;
+      margin-top: 20px; font-size: 13px; color: #86868b;
+      opacity: 0; animation: fadeHint 1s ease 2s forwards;
     }
+    @keyframes fadeHint { to { opacity: 1; } }
 
-    @keyframes fadeHint {
-      to { opacity: 1; }
-    }
-
-    /* done state */
     .done-badge {
-      margin-top: 28px;
-      background: #007AFF;
-      color: white;
-      font-size: 14px;
-      font-weight: 600;
-      padding: 12px 28px;
-      border-radius: 24px;
-      opacity: 0;
-      transform: translateY(8px);
+      margin-top: 24px; background: #007AFF; color: white;
+      font-size: 14px; font-weight: 600; padding: 12px 28px;
+      border-radius: 24px; opacity: 0; transform: translateY(8px);
       transition: opacity 0.4s ease, transform 0.4s ease;
     }
-
-    .done-badge.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .done-badge.show { opacity: 1; transform: translateY(0); }
   </style>
 </head>
 <body>
 
   <div class="slide-header">
     <div class="slide-title" id="slideTitle">Wins you money</div>
-    <div class="slide-subtitle" id="slideSubtitle">tap anywhere to skip</div>
+    <div class="slide-subtitle" id="slideSubtitle">tap anywhere to advance</div>
   </div>
 
   <div class="phone">
-    <!-- status bar -->
     <div class="status-bar">
       <div class="status-time">9:41</div>
       <div class="status-icons">
         <div class="signal-bars">
-          <div class="bar"></div>
-          <div class="bar"></div>
-          <div class="bar"></div>
-          <div class="bar"></div>
+          <div class="bar"></div><div class="bar"></div>
+          <div class="bar"></div><div class="bar"></div>
         </div>
         <svg width="16" height="12" viewBox="0 0 16 12" fill="#1d1d1f">
           <path d="M8 2.4C5.6 2.4 3.4 3.4 1.8 5L0 3.2C2.2 1.2 5 0 8 0s5.8 1.2 8 3.2L14.2 5C12.6 3.4 10.4 2.4 8 2.4z"/>
           <path d="M8 6c-1.4 0-2.6.6-3.6 1.4L2.6 5.6C4 4.4 5.9 3.6 8 3.6s4 .8 5.4 2L11.6 7.4C10.6 6.6 9.4 6 8 6z"/>
           <circle cx="8" cy="11" r="1.8"/>
         </svg>
-        <div class="battery">
-          <div class="battery-fill"></div>
-        </div>
+        <div class="battery"><div class="battery-fill"></div></div>
       </div>
     </div>
 
-    <!-- chat header -->
     <div class="chat-header">
       <div class="chat-avatar">🏀</div>
       <div class="chat-name">squad bets</div>
       <div class="chat-members">jake, mike, sideline &amp; you</div>
     </div>
 
-    <!-- messages -->
     <div class="messages" id="messages">
       <div class="ts">Today 9:41 PM</div>
     </div>
 
-    <!-- typing indicator (hidden by default) -->
-    <div class="typing-row" id="typing" style="padding: 0 12px 8px;">
-      <div class="typing-bubble">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-      </div>
-    </div>
-
-    <!-- input bar -->
     <div class="input-bar">
       <div class="input-field">iMessage</div>
       <div class="send-btn">
@@ -446,134 +282,127 @@
   <div class="done-badge" id="doneBadge">github.com/notandruu/sideline</div>
 
 <script>
-  // ─── conversation script ───────────────────────────────────────────────
-  // type: 'me' | 'them' | 'meme' | 'ts'
-  // typing: ms to show typing indicator before this message appears
   const script = [
-    { type: 'me',   text: 'yo the warriors play tonight right' },
-    { type: 'them', text: 'yep. warriors vs kings\nYES at 61c on polymarket rn 👀', typing: 1600 },
-    { type: 'them', text: 'pool has $340 in it', typing: 0 },
-    { type: 'me',   text: 'bet $100 on warriors winning' },
-    { type: 'them', text: 'BET PROPOSAL #1\n$100 on Warriors (YES @ 61c)\npotential payout: $164 💰', typing: 2000 },
-    { type: 'them', text: 'you voted yes automatically (you proposed it lol)\nwaiting on jake and mike...', typing: 0 },
-    { type: 'me',   text: 'JAKE GET ON' },
-    { type: 'me',   text: 'vote yes rn' },
-    { type: 'them', text: 'jake voted yes (38% weight)\nmike voted yes (29% weight)\n\nBET PLACED 🎰', typing: 1100 },
+    { type: 'me',   text: 'yo warriors tonight?' },
+    { type: 'them', text: 'yep vs kings. YES sitting at 61c rn 👀', typing: 1400 },
+    { type: 'them', text: 'pool has $340 in it btw', typing: 0 },
+    { type: 'me',   text: 'ok throw 100 on warriors' },
+    { type: 'them', text: 'bet. proposal up —\n$100 warriors YES @ 61c\npayout $164 if they win 💰', typing: 1800 },
+    { type: 'them', text: 'u voted yes already (u proposed it lol)\nwaiting on jake + mike', typing: 0 },
+    { type: 'me',   text: 'JAKE' },
+    { type: 'me',   text: 'bro vote yes rn' },
+    { type: 'them', text: 'jake in 👍 mike in 👍\n\nbet placed 🎰', typing: 1000 },
     { type: 'meme', src: 'memes/speed.webp' },
     { type: 'ts',   text: '11:48 PM' },
-    { type: 'them', text: '🏆 WARRIORS WIN\n\npool cashed $164 on the polymarket bet\npool is now $404 📈', typing: 800 },
-    { type: 'me',   text: 'LETSSSS GOOOO' },
-    { type: 'them', text: 'celtics game tomorrow at 7\nwant me to find a market?', typing: 1800 },
-    { type: 'me',   text: 'yes 😈' },
+    { type: 'them', text: '🏆 warriors won bro\n\ncashed $164, pool sitting at $404 now', typing: 700 },
+    { type: 'me',   text: 'LETSSS GOOOO' },
+    { type: 'me',   text: 'omg' },
+    { type: 'them', text: 'lmao easy money\n\nceltics game tmrw at 7, want me to find a market?', typing: 1600 },
+    { type: 'me',   text: 'obviously 😈' },
     { type: 'meme', src: 'memes/joever.jpg' },
   ]
 
   const titles = [
-    { at: 0,  title: 'No app.',          sub: 'tap anywhere to advance' },
-    { at: 4,  title: 'No UI.',           sub: 'tap anywhere to advance' },
-    { at: 9,  title: 'Just text.',       sub: 'tap anywhere to advance' },
-    { at: 11, title: 'Wins you money.',  sub: 'tap anywhere to advance' },
-    { at: 15, title: 'sideline',         sub: 'github.com/notandruu/sideline' },
+    { at: 0,  title: 'No app.',         sub: 'tap anywhere to advance' },
+    { at: 3,  title: 'No UI.',          sub: 'tap anywhere to advance' },
+    { at: 8,  title: 'Just text.',      sub: 'tap anywhere to advance' },
+    { at: 11, title: 'Wins you money.', sub: 'tap anywhere to advance' },
+    { at: 16, title: 'sideline',        sub: 'github.com/notandruu/sideline' },
   ]
 
-  // ─── state ─────────────────────────────────────────────────────────────
   let idx = 0
   let busy = false
   let typingTimer = null
   let autoTimer = null
+  let typingEl = null  // lives inside messages
 
   const messagesEl = document.getElementById('messages')
-  const typingEl   = document.getElementById('typing')
   const titleEl    = document.getElementById('slideTitle')
   const subtitleEl = document.getElementById('slideSubtitle')
   const doneBadge  = document.getElementById('doneBadge')
-  const tapHint    = document.getElementById('tapHint')
 
-  // show title on load
   setTimeout(() => {
     titleEl.classList.add('visible')
     subtitleEl.classList.add('visible')
-    updateTitle(0)
   }, 300)
 
-  function updateTitle(scriptIdx) {
+  function updateTitle(i) {
     let active = titles[0]
-    for (const t of titles) {
-      if (scriptIdx >= t.at) active = t
-    }
-    if (titleEl.textContent !== active.title) {
-      titleEl.style.opacity = 0
-      titleEl.style.transform = 'translateY(6px)'
-      setTimeout(() => {
-        titleEl.textContent = active.title
-        subtitleEl.textContent = active.sub
-        titleEl.style.opacity = 1
-        titleEl.style.transform = 'translateY(0)'
-      }, 200)
-    }
+    for (const t of titles) { if (i >= t.at) active = t }
+    if (titleEl.textContent === active.title) return
+    titleEl.style.opacity = 0
+    titleEl.style.transform = 'translateY(6px)'
+    setTimeout(() => {
+      titleEl.textContent = active.title
+      subtitleEl.textContent = active.sub
+      titleEl.style.opacity = 1
+      titleEl.style.transform = 'translateY(0)'
+    }, 200)
   }
 
   function showTyping() {
-    typingEl.classList.add('show')
+    if (typingEl) return
+    typingEl = document.createElement('div')
+    typingEl.className = 'typing-row'
+    typingEl.innerHTML = '<div class="typing-bubble"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>'
+    messagesEl.appendChild(typingEl)
+    requestAnimationFrame(() => {
+      typingEl.classList.add('show')
+      messagesEl.scrollTop = messagesEl.scrollHeight
+    })
   }
 
   function hideTyping() {
-    typingEl.classList.remove('show')
+    if (!typingEl) return
+    typingEl.remove()
+    typingEl = null
   }
 
   function appendMessage(item, prevType) {
-    const cont = prevType === item.type
-
     if (item.type === 'ts') {
       const el = document.createElement('div')
       el.className = 'ts'
       el.textContent = item.text
       messagesEl.appendChild(el)
+      messagesEl.scrollTop = messagesEl.scrollHeight
       return
     }
 
     if (item.type === 'meme') {
       const row = document.createElement('div')
       row.className = 'row them'
-      if (item.src) {
-        const meme = document.createElement('div')
-        meme.className = 'meme'
-        const img = document.createElement('img')
-        img.src = item.src
-        img.alt = 'meme'
-        meme.appendChild(img)
-        row.appendChild(meme)
-      } else {
-        const meme = document.createElement('div')
-        meme.className = 'meme-placeholder'
-        meme.innerHTML = `<span class="icon">${item.icon}</span><span>${item.label}</span>`
-        row.appendChild(meme)
-      }
+      const meme = document.createElement('div')
+      meme.className = 'meme'
+      const img = document.createElement('img')
+      img.src = item.src
+      img.alt = 'meme'
+      meme.appendChild(img)
+      row.appendChild(meme)
       messagesEl.appendChild(row)
-      requestAnimationFrame(() => row.classList.add('show'))
-      messagesEl.scrollTop = messagesEl.scrollHeight
+      requestAnimationFrame(() => {
+        row.classList.add('show')
+        messagesEl.scrollTop = messagesEl.scrollHeight
+      })
       return
     }
 
+    const cont = prevType === item.type
     const row = document.createElement('div')
     row.className = `row ${item.type}${cont ? ' cont' : ''}`
-
     const bubble = document.createElement('div')
     bubble.className = 'bubble'
     bubble.textContent = item.text
     row.appendChild(bubble)
-
     messagesEl.appendChild(row)
-    requestAnimationFrame(() => row.classList.add('show'))
-
-    // scroll to bottom
-    messagesEl.scrollTop = messagesEl.scrollHeight
+    requestAnimationFrame(() => {
+      row.classList.add('show')
+      messagesEl.scrollTop = messagesEl.scrollHeight
+    })
   }
 
   function step() {
     if (idx >= script.length) {
       doneBadge.classList.add('show')
-      tapHint.style.display = 'none'
       return
     }
 
@@ -583,10 +412,9 @@
 
     const item = script[idx]
     const prevType = idx > 0 ? script[idx - 1].type : null
-
     updateTitle(idx)
 
-    const typingMs = item.typing != null ? item.typing : (item.type === 'them' ? 1200 : 0)
+    const typingMs = item.typing != null ? item.typing : (item.type === 'them' ? 1100 : 0)
 
     if (typingMs > 0 && item.type === 'them') {
       showTyping()
@@ -596,41 +424,29 @@
           appendMessage(item, prevType)
           idx++
           busy = false
-          autoTimer = setTimeout(step, 900)
-        }, 120)
+          autoTimer = setTimeout(step, 850)
+        }, 100)
       }, typingMs)
     } else {
-      if (item.type !== 'them') hideTyping()
+      hideTyping()
       appendMessage(item, prevType)
       idx++
       busy = false
-      autoTimer = setTimeout(step, item.type === 'me' ? 700 : 800)
+      autoTimer = setTimeout(step, item.type === 'me' ? 650 : 750)
     }
   }
 
   function advance() {
     if (idx >= script.length) return
-
-    // skip current animation, show message immediately
     clearTimeout(typingTimer)
     clearTimeout(autoTimer)
     hideTyping()
-
-    if (busy) {
-      const item = script[idx - 1] ?? script[idx]
-      // message already being shown, just advance timer
-      autoTimer = setTimeout(step, 100)
-      busy = false
-      return
-    }
-
+    if (busy) { busy = false; autoTimer = setTimeout(step, 80); return }
     step()
   }
 
   document.body.addEventListener('click', advance)
-
-  // kick off
-  setTimeout(step, 1200)
+  setTimeout(step, 1000)
 </script>
 
 </body>
