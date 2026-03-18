@@ -61,7 +61,7 @@ export default function Page() {
               asChild
             >
               <a href="https://github.com/notandruu/sideline" target="_blank" rel="noopener noreferrer">
-                GitHub
+                Learn more
               </a>
             </Button>
           </div>
@@ -77,7 +77,7 @@ export default function Page() {
             with AI agents.
           </h1>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/60">
-            Sync with friends, propose bets, vote, and auto-execute on Polymarket — all over iMessage.
+            Sync with friends, propose bets, vote, and auto-execute on Polymarket. All over iMessage.
           </p>
           <div className="mt-6 flex gap-3">
             <Button
