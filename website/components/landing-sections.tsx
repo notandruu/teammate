@@ -27,8 +27,8 @@ function HowItWorks({ onScrollToDemo }: { onScrollToDemo: () => void }) {
   const steps = [
     {
       number: "01",
-      label: "Add sideline to your group chat",
-      body: "Run sideline on your Mac. It watches your iMessage threads and stays silent until there's betting intent.",
+      label: "Add teammate to your group chat",
+      body: "Run teammate on your Mac. It watches your iMessage threads and stays silent until there's betting intent.",
     },
     {
       number: "02",
@@ -116,10 +116,10 @@ function FeatureStatement() {
             className="space-y-6"
           >
             <p className="text-sm leading-relaxed text-muted-foreground">
-              Your friends are already texting about the game. sideline lives inside that same thread — every deposit, proposal, and vote is just a text message. No app to download, no link to open, no UI to navigate.
+              Your friends are already texting about the game. teammate lives inside that same thread — every deposit, proposal, and vote is just a text message. No app to download, no link to open, no UI to navigate.
             </p>
             <p className="text-sm leading-relaxed text-muted-foreground">
-              Natural language parsing means you say things however you'd naturally text them. "lfg" counts as a yes vote. "im out" counts as a no. sideline understands your group chat's language.
+              Natural language parsing means you say things however you'd naturally text them. "lfg" counts as a yes vote. "im out" counts as a no. teammate understands your group chat's language.
             </p>
           </motion.div>
         </div>
@@ -212,7 +212,7 @@ function BrandStatement() {
           transition={{ duration: 0.7, delay: 0.15 }}
           className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-muted-foreground"
         >
-          sideline turns your iMessage group chat into a mini hedge fund. No app required.
+          teammate turns your iMessage group chat into a mini hedge fund. No app required.
         </motion.p>
       </div>
     </section>
@@ -293,7 +293,7 @@ function CallToAction({ onScrollToDemo }: { onScrollToDemo: () => void }) {
               className="gap-2 rounded-full border border-foreground bg-transparent px-7 py-5 text-sm text-foreground hover:bg-foreground hover:text-background"
               asChild
             >
-              <a href="https://github.com/notandruu/sideline" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/notandruu/teammate" target="_blank" rel="noopener noreferrer">
                 Get started
                 <ArrowRight className="h-4 w-4" />
               </a>
@@ -309,14 +309,14 @@ function Footer() {
   return (
     <footer className="border-t border-border">
       <div className="mx-auto max-w-6xl px-6 py-8 flex items-center justify-between">
-        <span className="font-mono text-xs text-muted-foreground">sideline</span>
+        <span className="font-mono text-xs text-muted-foreground">teammate</span>
         <a
-          href="https://github.com/notandruu/sideline"
+          href="https://github.com/notandruu/teammate"
           target="_blank"
           rel="noopener noreferrer"
           className="text-xs text-muted-foreground transition-colors hover:text-foreground"
         >
-          github.com/notandruu/sideline
+          github.com/notandruu/teammate
         </a>
       </div>
     </footer>

@@ -18,7 +18,7 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: 'sideline — bet with your group chat',
+  title: 'teammate — bet with your group chat',
   description: 'Bring sports betting into your iMessage group chat. Pool money, propose bets, vote, and auto-execute on Polymarket — all over text.',
 }
 

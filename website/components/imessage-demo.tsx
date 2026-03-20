@@ -29,7 +29,7 @@ const TITLES: { at: number; text: string }[] = [
   { at: 3,  text: "No UI." },
   { at: 8,  text: "Just text." },
   { at: 11, text: "Wins you money." },
-  { at: 16, text: "sideline" },
+  { at: 16, text: "teammate" },
 ]
 
 function getTitle(idx: number) {
@@ -195,7 +195,7 @@ export function IMessageDemo() {
         <div style={{ flexShrink: 0, padding: "8px 20px 12px", textAlign: "center", borderBottom: "1px solid rgba(0,0,0,0.06)", background: "white" }}>
           <div style={{ fontSize: 28, marginBottom: 2 }}>🏀</div>
           <div style={{ fontSize: 16, fontWeight: 600, color: "#1d1d1f" }}>squad bets</div>
-          <div style={{ fontSize: 12, color: "#007AFF", marginTop: 2 }}>jake, mike, sideline &amp; you</div>
+          <div style={{ fontSize: 12, color: "#007AFF", marginTop: 2 }}>jake, mike, teammate &amp; you</div>
         </div>
 
         {/* Messages */}
@@ -289,7 +289,7 @@ export function IMessageDemo() {
 
       {state.done && (
         <div className="msg-enter" style={{ marginTop: 24, background: "#007AFF", color: "white", fontSize: 14, fontWeight: 600, padding: "12px 28px", borderRadius: 24 }}>
-          github.com/notandruu/teammate
+          tryteammate.com
         </div>
       )}
 

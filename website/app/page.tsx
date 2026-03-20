@@ -43,7 +43,7 @@ export default function Page() {
           <div className="rounded-br-[28px] bg-background p-3 pr-4 pb-4">
             <Image
               src="/images/sideline-logo.png"
-              alt="Sideline Logo"
+              alt="Teammate Logo"
               width={56}
               height={56}
               className="rounded-xl"
@@ -60,7 +60,7 @@ export default function Page() {
               className="shimmer-button rounded-md border-border bg-transparent text-muted-foreground hover:bg-muted hover:text-foreground"
               asChild
             >
-              <a href="https://github.com/notandruu/sideline" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/notandruu/teammate" target="_blank" rel="noopener noreferrer">
                 Learn more
               </a>
             </Button>
@@ -90,7 +90,7 @@ export default function Page() {
               className="rounded-full bg-white px-5 py-2 text-sm text-neutral-900 hover:bg-white/90"
               asChild
             >
-              <a href="https://github.com/notandruu/sideline" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/notandruu/teammate" target="_blank" rel="noopener noreferrer">
                 Add to iMessage
               </a>
             </Button>
