@@ -33,7 +33,7 @@ function HowItWorks({ onScrollToDemo }: { onScrollToDemo: () => void }) {
     {
       number: "02",
       label: "Pool money and propose a bet",
-      body: "Anyone can deposit funds and propose a bet in plain English. No commands, no syntax — just text how you'd normally text.",
+      body: "Anyone can deposit funds and propose a bet in plain English. No commands, no syntax. Just text how you'd normally text.",
     },
     {
       number: "03",
@@ -116,7 +116,7 @@ function FeatureStatement() {
             className="space-y-6"
           >
             <p className="text-sm leading-relaxed text-muted-foreground">
-              Your friends are already texting about the game. teammate lives inside that same thread — every deposit, proposal, and vote is just a text message. No app to download, no link to open, no UI to navigate.
+              Your friends are already texting about the game. teammate lives inside that same thread. Every deposit, proposal, and vote is just a text message. No app to download, no link to open, no UI to navigate.
             </p>
             <p className="text-sm leading-relaxed text-muted-foreground">
               Natural language parsing means you say things however you'd naturally text them. "lfg" counts as a yes vote. "im out" counts as a no. teammate understands your group chat's language.
@@ -138,7 +138,7 @@ function FeaturesGrid() {
     },
     {
       name: "Democratic votes",
-      description: "Propose any bet. 2/3 weighted majority required — weighted by how much you put in. Skin in the game matters.",
+      description: "Propose any bet. 2/3 weighted majority required, weighted by how much you put in. Skin in the game matters.",
     },
     {
       name: "Polymarket execution",
@@ -203,7 +203,7 @@ function BrandStatement() {
           transition={{ duration: 0.8 }}
           className="font-serif text-4xl font-normal leading-tight text-foreground md:text-5xl text-balance"
         >
-          The best part about betting isn't making money — it's doing it with friends.
+          The best part about betting isn't making money. It's doing it with friends.
         </motion.h2>
         <motion.p
           variants={fadeUp}
@@ -219,41 +219,6 @@ function BrandStatement() {
   )
 }
 
-function PoweredBy() {
-  const { ref, inView } = useSection()
-
-  const stack = ["Bun", "TypeScript", "Claude Haiku", "Polymarket CLOB API", "Polygon USDC", "imessage-kit"]
-
-  return (
-    <section ref={ref} className="border-t border-border bg-card">
-      <div className="mx-auto max-w-6xl px-6 py-16">
-        <motion.p
-          variants={fadeIn}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          transition={{ duration: 0.5 }}
-          className="mb-8 text-center text-xs font-medium uppercase tracking-widest text-muted-foreground"
-        >
-          Powered by
-        </motion.p>
-        <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
-          {stack.map((item, i) => (
-            <motion.span
-              key={item}
-              variants={fadeIn}
-              initial="hidden"
-              animate={inView ? "visible" : "hidden"}
-              transition={{ duration: 0.4, delay: 0.05 + i * 0.06 }}
-              className="font-mono text-sm text-muted-foreground"
-            >
-              {item}
-            </motion.span>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
 
 function CallToAction({ onScrollToDemo }: { onScrollToDemo: () => void }) {
   const { ref, inView } = useSection()
@@ -330,7 +295,6 @@ export function LandingSections({ onScrollToDemo }: { onScrollToDemo: () => void
       <FeatureStatement />
       <FeaturesGrid />
       <BrandStatement />
-      <PoweredBy />
       <CallToAction onScrollToDemo={onScrollToDemo} />
       <Footer />
     </>
