@@ -42,7 +42,7 @@ export default function Page() {
         <div className="absolute top-0 left-0 z-20">
           <div className="rounded-br-[28px] bg-background p-3 pr-4 pb-4">
             <Image
-              src="/images/sideline-logo.png"
+              src="/images/teammate-logo.png"
               alt="Teammate Logo"
               width={56}
               height={56}
