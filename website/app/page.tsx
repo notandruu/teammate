@@ -33,7 +33,7 @@ export default function Page() {
             />
           </video>
           <div className="absolute inset-0 bg-neutral-900/40" />
-          <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(135deg, #f43f8f 0%, #f97316 100%)", mixBlendMode: "color", opacity: 0.75 }} />
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(135deg, #f43f8f 0%, #f97316 100%)", mixBlendMode: "multiply" }} />
         </div>
 
         {/* Neon Shimmer Border */}
